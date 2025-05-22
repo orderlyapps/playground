@@ -13,9 +13,6 @@
 import { Route as rootRoute } from './routes/__root'
 import { Route as AboutImport } from './routes/about'
 import { Route as IndexImport } from './routes/index'
-import { Route as PostsIndexImport } from './routes/posts/index'
-import { Route as PostsPostidImport } from './routes/posts/$post_id'
-import { Route as groupInfoImport } from './routes/(group)/info'
 
 // Create/Update Routes
 
@@ -28,24 +25,6 @@ const AboutRoute = AboutImport.update({
 const IndexRoute = IndexImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => rootRoute,
-} as any)
-
-const PostsIndexRoute = PostsIndexImport.update({
-  id: '/posts/',
-  path: '/posts/',
-  getParentRoute: () => rootRoute,
-} as any)
-
-const PostsPostidRoute = PostsPostidImport.update({
-  id: '/posts/$post_id',
-  path: '/posts/$post_id',
-  getParentRoute: () => rootRoute,
-} as any)
-
-const groupInfoRoute = groupInfoImport.update({
-  id: '/(group)/info',
-  path: '/info',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -67,27 +46,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AboutImport
       parentRoute: typeof rootRoute
     }
-    '/(group)/info': {
-      id: '/(group)/info'
-      path: '/info'
-      fullPath: '/info'
-      preLoaderRoute: typeof groupInfoImport
-      parentRoute: typeof rootRoute
-    }
-    '/posts/$post_id': {
-      id: '/posts/$post_id'
-      path: '/posts/$post_id'
-      fullPath: '/posts/$post_id'
-      preLoaderRoute: typeof PostsPostidImport
-      parentRoute: typeof rootRoute
-    }
-    '/posts/': {
-      id: '/posts/'
-      path: '/posts'
-      fullPath: '/posts'
-      preLoaderRoute: typeof PostsIndexImport
-      parentRoute: typeof rootRoute
-    }
   }
 }
 
@@ -96,57 +54,36 @@ declare module '@tanstack/react-router' {
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
-  '/info': typeof groupInfoRoute
-  '/posts/$post_id': typeof PostsPostidRoute
-  '/posts': typeof PostsIndexRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
-  '/info': typeof groupInfoRoute
-  '/posts/$post_id': typeof PostsPostidRoute
-  '/posts': typeof PostsIndexRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
-  '/(group)/info': typeof groupInfoRoute
-  '/posts/$post_id': typeof PostsPostidRoute
-  '/posts/': typeof PostsIndexRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/info' | '/posts/$post_id' | '/posts'
+  fullPaths: '/' | '/about'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/info' | '/posts/$post_id' | '/posts'
-  id:
-    | '__root__'
-    | '/'
-    | '/about'
-    | '/(group)/info'
-    | '/posts/$post_id'
-    | '/posts/'
+  to: '/' | '/about'
+  id: '__root__' | '/' | '/about'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
-  groupInfoRoute: typeof groupInfoRoute
-  PostsPostidRoute: typeof PostsPostidRoute
-  PostsIndexRoute: typeof PostsIndexRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
-  groupInfoRoute: groupInfoRoute,
-  PostsPostidRoute: PostsPostidRoute,
-  PostsIndexRoute: PostsIndexRoute,
 }
 
 export const routeTree = rootRoute
@@ -160,10 +97,7 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
-        "/about",
-        "/(group)/info",
-        "/posts/$post_id",
-        "/posts/"
+        "/about"
       ]
     },
     "/": {
@@ -171,15 +105,6 @@ export const routeTree = rootRoute
     },
     "/about": {
       "filePath": "about.tsx"
-    },
-    "/(group)/info": {
-      "filePath": "(group)/info.tsx"
-    },
-    "/posts/$post_id": {
-      "filePath": "posts/$post_id.tsx"
-    },
-    "/posts/": {
-      "filePath": "posts/index.tsx"
     }
   }
 }

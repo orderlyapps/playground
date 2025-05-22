@@ -6,8 +6,11 @@ export const Route = createFileRoute("/")({
 
 function App() {
   return (
-    <p>
-      <code>Playground Home</code>
-    </p>
+    <div
+      style={{ viewTransitionName: "slide-out" }}
+      className="app-content center home"
+    >
+      <div>Home</div>
+    </div>
   );
 }

@@ -1,39 +1,125 @@
-.App {
-  text-align: center;
+.slide-in-page {
+  view-transition-name: slide-in;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+::view-transition-old(slide-in),
+::view-transition-new(slide-in) {
+  animation-duration: 0.5s;
+  animation-timing-function: ease-in-out;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+::view-transition-old(slide-in) {
+  animation-name: scale-down;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+::view-transition-new(slide-in) {
+  animation-name: scale-up;
 }
 
-.App-link {
-  color: #61dafb;
-  padding: 1rem;
-}
-
-@keyframes App-logo-spin {
+@keyframes scale-down {
   from {
-    transform: rotate(0deg);
+    transform: translateX(0);
   }
   to {
-    transform: rotate(360deg);
+    transform: translateX(100%);
   }
 }
+
+@keyframes scale-up {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+.slide-out-page {
+  view-transition-name: slide-out;
+}
+
+::view-transition-old(slide-out),
+::view-transition-new(slide-out) {
+  animation-duration: 0.5s;
+  animation-timing-function: ease-in-out;
+}
+
+::view-transition-old(slide-out) {
+  animation-name: scale-down-x;
+}
+
+::view-transition-new(slide-out) {
+  animation-name: scale-up-x;
+}
+
+@keyframes scale-down-x {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+@keyframes scale-up-x {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+.app-header {
+  background-color: grey;
+  height: 10vh;
+  width: 100%;
+  position: fixed;
+}
+
+.app-body {
+  background-color: white;
+  height: 80vh;
+  width: 100%;
+  position: fixed;
+  top: 10vh;
+}
+
+.app-nav {
+  background-color: grey;
+  height: 10vh;
+  width: 100%;
+  position: fixed;
+  top: 90vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+}
+
+.app-content {
+  height: 90vh;
+  width: 100%;
+  position: fixed;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+}
+
+.home {
+  height: 80vh;
+  margin-top: 10vh;
+  background-color: red;
+}
+
+.about {
+  height: 80vh;
+  margin-top: 10vh;
+  background-color: blue;
+}
+  
+  

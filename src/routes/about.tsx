@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/about")({
   component: App,
@@ -6,11 +6,11 @@ export const Route = createFileRoute("/about")({
 
 function App() {
   return (
-    <p>
-      <code>About: | Go to</code>
-      <Link className="App-link" to="/info">
-        Info
-      </Link>
-    </p>
+    <div
+      style={{ viewTransitionName: "slide-in" }}
+      className="app-content center about"
+    >
+      <div>About</div>
+    </div>
   );
 }

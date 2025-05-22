@@ -1,1 +1,0 @@
-import{j as s}from"./index-5q_uHv0U.js";const o="/assets/logo-CHtJT8UQ.svg",n=function(){return s.jsx("div",{className:"App",children:s.jsxs("header",{className:"App-header",children:[s.jsx("img",{src:o,className:"App-logo",alt:"logo"}),s.jsx("p",{children:s.jsx("code",{children:"gh-pages"})})]})})};export{n as component};

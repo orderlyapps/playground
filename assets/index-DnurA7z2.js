@@ -1,1 +1,0 @@
-import{j as s}from"./index-CsimGXLj.js";const o="/playground/assets/logo-CHtJT8UQ.svg",p=function(){return s.jsx("div",{className:"App",children:s.jsxs("header",{className:"App-header",children:[s.jsx("img",{src:o,className:"App-logo",alt:"logo"}),s.jsx("p",{children:s.jsx("code",{children:"Playground"})})]})})};export{p as component};

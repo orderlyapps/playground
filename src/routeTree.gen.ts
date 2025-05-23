@@ -11,14 +11,34 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
+import { Route as MantineRouteImport } from './routes/_mantine/route'
 import { Route as IndexImport } from './routes/index'
+import { Route as MantineMantineTextImport } from './routes/_mantine/mantine/text'
+import { Route as MantineMantineButtonsImport } from './routes/_mantine/mantine/buttons'
 
 // Create/Update Routes
+
+const MantineRouteRoute = MantineRouteImport.update({
+  id: '/_mantine',
+  getParentRoute: () => rootRoute,
+} as any)
 
 const IndexRoute = IndexImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRoute,
+} as any)
+
+const MantineMantineTextRoute = MantineMantineTextImport.update({
+  id: '/mantine/text',
+  path: '/mantine/text',
+  getParentRoute: () => MantineRouteRoute,
+} as any)
+
+const MantineMantineButtonsRoute = MantineMantineButtonsImport.update({
+  id: '/mantine/buttons',
+  path: '/mantine/buttons',
+  getParentRoute: () => MantineRouteRoute,
 } as any)
 
 // Populate the FileRoutesByPath interface
@@ -32,39 +52,90 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
     }
+    '/_mantine': {
+      id: '/_mantine'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof MantineRouteImport
+      parentRoute: typeof rootRoute
+    }
+    '/_mantine/mantine/buttons': {
+      id: '/_mantine/mantine/buttons'
+      path: '/mantine/buttons'
+      fullPath: '/mantine/buttons'
+      preLoaderRoute: typeof MantineMantineButtonsImport
+      parentRoute: typeof MantineRouteImport
+    }
+    '/_mantine/mantine/text': {
+      id: '/_mantine/mantine/text'
+      path: '/mantine/text'
+      fullPath: '/mantine/text'
+      preLoaderRoute: typeof MantineMantineTextImport
+      parentRoute: typeof MantineRouteImport
+    }
   }
 }
 
 // Create and export the route tree
 
+interface MantineRouteRouteChildren {
+  MantineMantineButtonsRoute: typeof MantineMantineButtonsRoute
+  MantineMantineTextRoute: typeof MantineMantineTextRoute
+}
+
+const MantineRouteRouteChildren: MantineRouteRouteChildren = {
+  MantineMantineButtonsRoute: MantineMantineButtonsRoute,
+  MantineMantineTextRoute: MantineMantineTextRoute,
+}
+
+const MantineRouteRouteWithChildren = MantineRouteRoute._addFileChildren(
+  MantineRouteRouteChildren,
+)
+
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '': typeof MantineRouteRouteWithChildren
+  '/mantine/buttons': typeof MantineMantineButtonsRoute
+  '/mantine/text': typeof MantineMantineTextRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '': typeof MantineRouteRouteWithChildren
+  '/mantine/buttons': typeof MantineMantineButtonsRoute
+  '/mantine/text': typeof MantineMantineTextRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
+  '/_mantine': typeof MantineRouteRouteWithChildren
+  '/_mantine/mantine/buttons': typeof MantineMantineButtonsRoute
+  '/_mantine/mantine/text': typeof MantineMantineTextRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '' | '/mantine/buttons' | '/mantine/text'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '' | '/mantine/buttons' | '/mantine/text'
+  id:
+    | '__root__'
+    | '/'
+    | '/_mantine'
+    | '/_mantine/mantine/buttons'
+    | '/_mantine/mantine/text'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  MantineRouteRoute: typeof MantineRouteRouteWithChildren
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  MantineRouteRoute: MantineRouteRouteWithChildren,
 }
 
 export const routeTree = rootRoute
@@ -77,11 +148,27 @@ export const routeTree = rootRoute
     "__root__": {
       "filePath": "__root.tsx",
       "children": [
-        "/"
+        "/",
+        "/_mantine"
       ]
     },
     "/": {
       "filePath": "index.tsx"
+    },
+    "/_mantine": {
+      "filePath": "_mantine/route.tsx",
+      "children": [
+        "/_mantine/mantine/buttons",
+        "/_mantine/mantine/text"
+      ]
+    },
+    "/_mantine/mantine/buttons": {
+      "filePath": "_mantine/mantine/buttons.tsx",
+      "parent": "/_mantine"
+    },
+    "/_mantine/mantine/text": {
+      "filePath": "_mantine/mantine/text.tsx",
+      "parent": "/_mantine"
     }
   }
 }

@@ -13,6 +13,7 @@
 import { Route as rootRoute } from './routes/__root'
 import { Route as MantineRouteImport } from './routes/_mantine/route'
 import { Route as IndexImport } from './routes/index'
+import { Route as PdfLibIndexImport } from './routes/pdf-lib/index'
 import { Route as MantineMantineTextImport } from './routes/_mantine/mantine/text'
 import { Route as MantineMantineButtonsImport } from './routes/_mantine/mantine/buttons'
 
@@ -26,6 +27,12 @@ const MantineRouteRoute = MantineRouteImport.update({
 const IndexRoute = IndexImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const PdfLibIndexRoute = PdfLibIndexImport.update({
+  id: '/pdf-lib/',
+  path: '/pdf-lib/',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -57,6 +64,13 @@ declare module '@tanstack/react-router' {
       path: ''
       fullPath: ''
       preLoaderRoute: typeof MantineRouteImport
+      parentRoute: typeof rootRoute
+    }
+    '/pdf-lib/': {
+      id: '/pdf-lib/'
+      path: '/pdf-lib'
+      fullPath: '/pdf-lib'
+      preLoaderRoute: typeof PdfLibIndexImport
       parentRoute: typeof rootRoute
     }
     '/_mantine/mantine/buttons': {
@@ -95,6 +109,7 @@ const MantineRouteRouteWithChildren = MantineRouteRoute._addFileChildren(
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '': typeof MantineRouteRouteWithChildren
+  '/pdf-lib': typeof PdfLibIndexRoute
   '/mantine/buttons': typeof MantineMantineButtonsRoute
   '/mantine/text': typeof MantineMantineTextRoute
 }
@@ -102,6 +117,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '': typeof MantineRouteRouteWithChildren
+  '/pdf-lib': typeof PdfLibIndexRoute
   '/mantine/buttons': typeof MantineMantineButtonsRoute
   '/mantine/text': typeof MantineMantineTextRoute
 }
@@ -110,19 +126,21 @@ export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
   '/_mantine': typeof MantineRouteRouteWithChildren
+  '/pdf-lib/': typeof PdfLibIndexRoute
   '/_mantine/mantine/buttons': typeof MantineMantineButtonsRoute
   '/_mantine/mantine/text': typeof MantineMantineTextRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '' | '/mantine/buttons' | '/mantine/text'
+  fullPaths: '/' | '' | '/pdf-lib' | '/mantine/buttons' | '/mantine/text'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '' | '/mantine/buttons' | '/mantine/text'
+  to: '/' | '' | '/pdf-lib' | '/mantine/buttons' | '/mantine/text'
   id:
     | '__root__'
     | '/'
     | '/_mantine'
+    | '/pdf-lib/'
     | '/_mantine/mantine/buttons'
     | '/_mantine/mantine/text'
   fileRoutesById: FileRoutesById
@@ -131,11 +149,13 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   MantineRouteRoute: typeof MantineRouteRouteWithChildren
+  PdfLibIndexRoute: typeof PdfLibIndexRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   MantineRouteRoute: MantineRouteRouteWithChildren,
+  PdfLibIndexRoute: PdfLibIndexRoute,
 }
 
 export const routeTree = rootRoute
@@ -149,7 +169,8 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
-        "/_mantine"
+        "/_mantine",
+        "/pdf-lib/"
       ]
     },
     "/": {
@@ -161,6 +182,9 @@ export const routeTree = rootRoute
         "/_mantine/mantine/buttons",
         "/_mantine/mantine/text"
       ]
+    },
+    "/pdf-lib/": {
+      "filePath": "pdf-lib/index.tsx"
     },
     "/_mantine/mantine/buttons": {
       "filePath": "_mantine/mantine/buttons.tsx",

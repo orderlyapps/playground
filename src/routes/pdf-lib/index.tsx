@@ -1,7 +1,7 @@
-import { createFileRoute } from '@tanstack/react-router';
-import { PDFDocument, rgb, StandardFonts } from 'pdf-lib';
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { PDFDocument, rgb, StandardFonts } from "pdf-lib";
 
-export const Route = createFileRoute('/pdf-lib/')({
+export const Route = createFileRoute("/pdf-lib/")({
   component: PdfLibExample,
 });
 
@@ -21,7 +21,7 @@ function PdfLibExample() {
 
     // Draw a string of text toward the top of the page
     const fontSize = 30;
-    page.drawText('Creating PDFs in the browser with pdf-lib!', {
+    page.drawText("Creating PDFs in the browser with pdf-lib!", {
       x: 50,
       y: height - 4 * fontSize,
       font: timesRomanFont,
@@ -33,10 +33,10 @@ function PdfLibExample() {
     const pdfBytes = await pdfDoc.save();
 
     // Trigger the browser to download the PDF document
-    const blob = new Blob([pdfBytes], { type: 'application/pdf' });
-    const link = document.createElement('a');
+    const blob = new Blob([pdfBytes], { type: "application/pdf" });
+    const link = document.createElement("a");
     link.href = URL.createObjectURL(blob);
-    link.download = 'created-with-pdf-lib.pdf';
+    link.download = "created-with-pdf-lib.pdf";
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -44,10 +44,10 @@ function PdfLibExample() {
 
   return (
     <div className="p-2">
+      <Link to="/">{"HOME"}</Link>
       <h3>pdf-lib Example</h3>
       <p>Click the button to create and download a PDF.</p>
       <button onClick={createPdf}>Create PDF</button>
     </div>
   );
 }
-

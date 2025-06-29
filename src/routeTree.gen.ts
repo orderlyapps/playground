@@ -14,6 +14,7 @@ import { Route as rootRoute } from './routes/__root'
 import { Route as MantineRouteImport } from './routes/_mantine/route'
 import { Route as IndexImport } from './routes/index'
 import { Route as PdfLibIndexImport } from './routes/pdf-lib/index'
+import { Route as JspdfJspdfImport } from './routes/jspdf/jspdf'
 import { Route as MantineMantineTextImport } from './routes/_mantine/mantine/text'
 import { Route as MantineMantineButtonsImport } from './routes/_mantine/mantine/buttons'
 
@@ -33,6 +34,12 @@ const IndexRoute = IndexImport.update({
 const PdfLibIndexRoute = PdfLibIndexImport.update({
   id: '/pdf-lib/',
   path: '/pdf-lib/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const JspdfJspdfRoute = JspdfJspdfImport.update({
+  id: '/jspdf/jspdf',
+  path: '/jspdf/jspdf',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -64,6 +71,13 @@ declare module '@tanstack/react-router' {
       path: ''
       fullPath: ''
       preLoaderRoute: typeof MantineRouteImport
+      parentRoute: typeof rootRoute
+    }
+    '/jspdf/jspdf': {
+      id: '/jspdf/jspdf'
+      path: '/jspdf/jspdf'
+      fullPath: '/jspdf/jspdf'
+      preLoaderRoute: typeof JspdfJspdfImport
       parentRoute: typeof rootRoute
     }
     '/pdf-lib/': {
@@ -109,6 +123,7 @@ const MantineRouteRouteWithChildren = MantineRouteRoute._addFileChildren(
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '': typeof MantineRouteRouteWithChildren
+  '/jspdf/jspdf': typeof JspdfJspdfRoute
   '/pdf-lib': typeof PdfLibIndexRoute
   '/mantine/buttons': typeof MantineMantineButtonsRoute
   '/mantine/text': typeof MantineMantineTextRoute
@@ -117,6 +132,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '': typeof MantineRouteRouteWithChildren
+  '/jspdf/jspdf': typeof JspdfJspdfRoute
   '/pdf-lib': typeof PdfLibIndexRoute
   '/mantine/buttons': typeof MantineMantineButtonsRoute
   '/mantine/text': typeof MantineMantineTextRoute
@@ -126,6 +142,7 @@ export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
   '/_mantine': typeof MantineRouteRouteWithChildren
+  '/jspdf/jspdf': typeof JspdfJspdfRoute
   '/pdf-lib/': typeof PdfLibIndexRoute
   '/_mantine/mantine/buttons': typeof MantineMantineButtonsRoute
   '/_mantine/mantine/text': typeof MantineMantineTextRoute
@@ -133,13 +150,26 @@ export interface FileRoutesById {
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '' | '/pdf-lib' | '/mantine/buttons' | '/mantine/text'
+  fullPaths:
+    | '/'
+    | ''
+    | '/jspdf/jspdf'
+    | '/pdf-lib'
+    | '/mantine/buttons'
+    | '/mantine/text'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '' | '/pdf-lib' | '/mantine/buttons' | '/mantine/text'
+  to:
+    | '/'
+    | ''
+    | '/jspdf/jspdf'
+    | '/pdf-lib'
+    | '/mantine/buttons'
+    | '/mantine/text'
   id:
     | '__root__'
     | '/'
     | '/_mantine'
+    | '/jspdf/jspdf'
     | '/pdf-lib/'
     | '/_mantine/mantine/buttons'
     | '/_mantine/mantine/text'
@@ -149,12 +179,14 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   MantineRouteRoute: typeof MantineRouteRouteWithChildren
+  JspdfJspdfRoute: typeof JspdfJspdfRoute
   PdfLibIndexRoute: typeof PdfLibIndexRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   MantineRouteRoute: MantineRouteRouteWithChildren,
+  JspdfJspdfRoute: JspdfJspdfRoute,
   PdfLibIndexRoute: PdfLibIndexRoute,
 }
 
@@ -170,6 +202,7 @@ export const routeTree = rootRoute
       "children": [
         "/",
         "/_mantine",
+        "/jspdf/jspdf",
         "/pdf-lib/"
       ]
     },
@@ -182,6 +215,9 @@ export const routeTree = rootRoute
         "/_mantine/mantine/buttons",
         "/_mantine/mantine/text"
       ]
+    },
+    "/jspdf/jspdf": {
+      "filePath": "jspdf/jspdf.tsx"
     },
     "/pdf-lib/": {
       "filePath": "pdf-lib/index.tsx"

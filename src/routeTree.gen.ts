@@ -14,6 +14,7 @@ import { Route as rootRoute } from './routes/__root'
 import { Route as MantineRouteImport } from './routes/_mantine/route'
 import { Route as IndexImport } from './routes/index'
 import { Route as PdfLibIndexImport } from './routes/pdf-lib/index'
+import { Route as MapboxIndexImport } from './routes/mapbox/index'
 import { Route as JspdfJspdfImport } from './routes/jspdf/jspdf'
 import { Route as MantineMantineTextImport } from './routes/_mantine/mantine/text'
 import { Route as MantineMantineButtonsImport } from './routes/_mantine/mantine/buttons'
@@ -34,6 +35,12 @@ const IndexRoute = IndexImport.update({
 const PdfLibIndexRoute = PdfLibIndexImport.update({
   id: '/pdf-lib/',
   path: '/pdf-lib/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const MapboxIndexRoute = MapboxIndexImport.update({
+  id: '/mapbox/',
+  path: '/mapbox/',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -80,6 +87,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof JspdfJspdfImport
       parentRoute: typeof rootRoute
     }
+    '/mapbox/': {
+      id: '/mapbox/'
+      path: '/mapbox'
+      fullPath: '/mapbox'
+      preLoaderRoute: typeof MapboxIndexImport
+      parentRoute: typeof rootRoute
+    }
     '/pdf-lib/': {
       id: '/pdf-lib/'
       path: '/pdf-lib'
@@ -124,6 +138,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '': typeof MantineRouteRouteWithChildren
   '/jspdf/jspdf': typeof JspdfJspdfRoute
+  '/mapbox': typeof MapboxIndexRoute
   '/pdf-lib': typeof PdfLibIndexRoute
   '/mantine/buttons': typeof MantineMantineButtonsRoute
   '/mantine/text': typeof MantineMantineTextRoute
@@ -133,6 +148,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '': typeof MantineRouteRouteWithChildren
   '/jspdf/jspdf': typeof JspdfJspdfRoute
+  '/mapbox': typeof MapboxIndexRoute
   '/pdf-lib': typeof PdfLibIndexRoute
   '/mantine/buttons': typeof MantineMantineButtonsRoute
   '/mantine/text': typeof MantineMantineTextRoute
@@ -143,6 +159,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/_mantine': typeof MantineRouteRouteWithChildren
   '/jspdf/jspdf': typeof JspdfJspdfRoute
+  '/mapbox/': typeof MapboxIndexRoute
   '/pdf-lib/': typeof PdfLibIndexRoute
   '/_mantine/mantine/buttons': typeof MantineMantineButtonsRoute
   '/_mantine/mantine/text': typeof MantineMantineTextRoute
@@ -154,6 +171,7 @@ export interface FileRouteTypes {
     | '/'
     | ''
     | '/jspdf/jspdf'
+    | '/mapbox'
     | '/pdf-lib'
     | '/mantine/buttons'
     | '/mantine/text'
@@ -162,6 +180,7 @@ export interface FileRouteTypes {
     | '/'
     | ''
     | '/jspdf/jspdf'
+    | '/mapbox'
     | '/pdf-lib'
     | '/mantine/buttons'
     | '/mantine/text'
@@ -170,6 +189,7 @@ export interface FileRouteTypes {
     | '/'
     | '/_mantine'
     | '/jspdf/jspdf'
+    | '/mapbox/'
     | '/pdf-lib/'
     | '/_mantine/mantine/buttons'
     | '/_mantine/mantine/text'
@@ -180,6 +200,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   MantineRouteRoute: typeof MantineRouteRouteWithChildren
   JspdfJspdfRoute: typeof JspdfJspdfRoute
+  MapboxIndexRoute: typeof MapboxIndexRoute
   PdfLibIndexRoute: typeof PdfLibIndexRoute
 }
 
@@ -187,6 +208,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   MantineRouteRoute: MantineRouteRouteWithChildren,
   JspdfJspdfRoute: JspdfJspdfRoute,
+  MapboxIndexRoute: MapboxIndexRoute,
   PdfLibIndexRoute: PdfLibIndexRoute,
 }
 
@@ -203,6 +225,7 @@ export const routeTree = rootRoute
         "/",
         "/_mantine",
         "/jspdf/jspdf",
+        "/mapbox/",
         "/pdf-lib/"
       ]
     },
@@ -218,6 +241,9 @@ export const routeTree = rootRoute
     },
     "/jspdf/jspdf": {
       "filePath": "jspdf/jspdf.tsx"
+    },
+    "/mapbox/": {
+      "filePath": "mapbox/index.tsx"
     },
     "/pdf-lib/": {
       "filePath": "pdf-lib/index.tsx"

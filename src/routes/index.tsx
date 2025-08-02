@@ -19,6 +19,7 @@ function App() {
       <Link to="/mantine/buttons">Mantine</Link>
       <Link to="/pdf-lib">PDFLib</Link>
       <Link to="/jspdf/jspdf">jsPDF</Link>
+      <Link to="/mapbox">Mapbox</Link>
     </div>
   );
 }
